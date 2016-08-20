@@ -11,50 +11,102 @@ or `$facts['operatingsystem']`. You should use the new structured facts like
 
 Some facts have no equivalent in the structured fact list:
 
-* `memoryfree_mb` - There is no fact that returns exclusively in MiB. The
-  closest equivalent is `$facts['memory']['system'][available']` or
-  `$facts['memory']['system']['available_bytes']`. See
-  [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
-* `memorysize_mb` - There is no fact that returns exclusively in MiB. The
-  closest equivalent is `$facts['memory']['system']['total']` or
-  `$facts['memory']['system']['total_bytes']`. See
-  [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
-* `swapfree_mb` - There is no fact that returns exclusively in MiB. The closest
-  equivalent is `$facts['memory']['swap']['available']` or
-  `$facts['memory']['swap']['available_bytes']`. See
-  [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
-* `swapsize_mb` - There is no fact that returns exclusively in MiB. The closest
-  equivalent is `$facts['memory']['swap']['used']` or
-  `$facts['memory']['swap']['used_bytes']`. See
-  [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
-* `blockdevices` - This returns a string containing all block devices separated
-  by a comma. This can be duplicated using
-  [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib) and the
-  following: `join(keys($facts['disks']), ',')`
-* `interfaces` - This returns a string containing all interfaces separated by a
-  comma. This can be duplicated using
-  [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib) and the
-  following: `join(keys($facts['networking']['interfaces']), ',')`.
-* `zones` - This returns a string containing all zone names separated by a
-  comma. This can be duplicated using
-  [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib) and the
-  following: `join(keys($facts['solaris_zones']['zones']), ',')`
-* `sshfp_dsa` - This returns a string containing both the SHA1 and SHA256
-  fingerprint for the DSA algorithm. This can be duplicated using the following:
-  `"$facts['ssh']['dsa']['fingerprints']['sha1']
-  $facts['ssh']['dsa']['fingerprints']['sha256']"`
-* `sshfp_ecdsa` - This returns a string containing both the SHA1 and SHA256
-  fingerprint for the ECDSA algorithm. This can be duplicated using the
-  following: `"$facts['ssh']['ecdsa']['fingerprints']['sha1']
-  $facts['ssh']['ecdsa']['fingerprints']['sha256']"`
-* `sshfp_ed25519` - This returns a string containing both the SHA1 and SHA256
-  fingerprint for the Ed25519 algorithm. This can be duplicated using the
-  following: `"$facts['ssh']['ed25519']['fingerprints']['sha1']
-  $facts['ssh']['ed25519']['fingerprints']['sha256']"`
-* `sshfp_rsa` - This returns a string containing both the SHA1 and SHA256
-  fingerprint for the RSA algorithm. This can be duplicated using the following:
-  `"$facts['ssh']['rsa']['fingerprints']['sha1']
-  $facts['ssh']['rsa']['fingerprints']['sha256']"`
+### `memoryfree_mb`
+
+There is no fact that returns exclusively in MiB.
+
+The closest equivalent is `$facts['memory']['system'][available']` or
+`$facts['memory']['system']['available_bytes']`.
+
+See
+[facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
+
+### `memorysize_mb`
+
+There is no fact that returns exclusively in MiB.
+
+The closest equivalent is `$facts['memory']['system']['total']` or
+`$facts['memory']['system']['total_bytes']`.
+
+See [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
+
+### `swapfree_mb`
+
+There is no fact that returns exclusively in MiB.
+
+The closest equivalent is `$facts['memory']['swap']['available']` or
+`$facts['memory']['swap']['available_bytes']`.
+
+See [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
+
+### `swapsize_mb`
+
+There is no fact that returns exclusively in MiB.
+
+The closest equivalent is `$facts['memory']['swap']['used']` or
+`$facts['memory']['swap']['used_bytes']`.
+
+See [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
+
+### `blockdevices`
+
+This returns a string containing all block devices separated by a comma.
+
+This can be duplicated using
+[puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib) and the
+following: `join(keys($facts['disks']), ',')`
+
+### `interfaces`
+
+This returns a string containing all interfaces separated by a comma.
+
+This can be duplicated using
+[puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib) and the
+following: `join(keys($facts['networking']['interfaces']), ',')`.
+
+### `zones`
+
+This returns a string containing all zone names separated by a comma.
+
+This can be duplicated using
+[puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib) and the
+following: `join(keys($facts['solaris_zones']['zones']), ',')`
+
+### `sshfp_dsa`
+
+This returns a string containing both the SHA1 and SHA256 fingerprint for the
+DSA algorithm.
+
+This can be duplicated using the following string:
+`"$facts['ssh']['dsa']['fingerprints']['sha1']
+$facts['ssh']['dsa']['fingerprints']['sha256']"`
+
+### `sshfp_ecdsa`
+
+This returns a string containing both the SHA1 and SHA256 fingerprint for the
+ECDSA algorithm.
+
+This can be duplicated using the following string:
+`"$facts['ssh']['ecdsa']['fingerprints']['sha1']
+$facts['ssh']['ecdsa']['fingerprints']['sha256']"`
+
+### `sshfp_ed25519`
+
+This returns a string containing both the SHA1 and SHA256 fingerprint for the
+Ed25519 algorithm.
+
+This can be duplicated using the following string:
+`"$facts['ssh']['ed25519']['fingerprints']['sha1']
+$facts['ssh']['ed25519']['fingerprints']['sha256']"`
+
+### `sshfp_rsa`
+
+This returns a string containing both the SHA1 and SHA256 fingerprint for the
+RSA algorithm.
+
+This can be duplicated using the following string:
+`"$facts['ssh']['rsa']['fingerprints']['sha1']
+$facts['ssh']['rsa']['fingerprints']['sha256']"`
 
 ## Installing
 
