@@ -1,0 +1,19 @@
+---
+language: ruby
+before_install: rm Gemfile.lock || true
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1.10
+  - 2.2.5
+  - 2.3.1
+script:
+  - bundle exec rake spec
+notifications:
+  email: false
+deploy:
+  provider: rubygems
+  api_key:
+    secure: jfddluZCpkADkqHZS3lGCFo7ajPS3PoqL28ZFXaHQBovvTGNtUV+7ztVUIa+1hSZzPSoZZ0MvsaDFK3AO/eTK+xNOL3RrK1sqtIfTViZi+a4bmxY6QIRrIKNnjlCv53pP9+5kjYvUSpUJjHJT8fORyLDPJYw0N4HEUT0vd9a4pJE6x3ENkJKEleVfWambb2ukvA7ssx2YFlnvgXxtM6r81wwJVg6iidvlzvNiSpNkNHNpfzAfHN0GwYt4Vuigl125ox2IXnXsQxkmM4p7mnW6Oj6y8eLMBi/AF9j94e9kPJEZ2TA12FxzPMmdR60cJpSxKxUNx1cqBfAC4MByBfam5mC1hA+gCVg4Tbrox2BoFx4S8UUmkMKsOhK7VcUwdK21BEnKAVFOPtQYAb/hBNR8sggE053qK8jXvbPcbZgFVuM+WDqutAbqtBysQ/klXUZ/2gC5H8wq1HZwOO4l4//8Rj2BT0UJu2sUrFhTndkB+xVV7IwcboQlUl9Q7s+GUnqyz7X/hldYdUloz59W28F8zg2l5rCAeSNiaG6QXzhY53U2mfULd/00h3KwR2ZYO9lwKGMWlsAORS/FP3GeTSAgBQtNyS2B6q2kAAltGI1sjZK4WH+lIgC+8AIJkiv1CvZ6lzgy1OhoTj0JgfTGXfkcW9aSDAGzW7olcIBh3XMzVs=
+  on:
+    tags: true
