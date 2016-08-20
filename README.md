@@ -1,11 +1,68 @@
 [![Build Status](https://travis-ci.org/mmckinst/puppet-lint-legacy_facts-check.svg?branch=master)](https://travis-ci.org/mmckinst/puppet-lint-legacy_facts-check)
 [![Gem](https://img.shields.io/gem/v/puppet-lint-legacy_facts-check.svg?maxAge=2592000)](https://rubygems.org/gems/puppet-lint-legacy_facts-check)
 
+## Overview
+
 A pupet-lint to check you are not using legacy facts like `$::operatingsystem`
 or `$facts['operatingsystem']`. You should use the new structured facts like
 `$facts['os']['name']` instead
 
-## Overview
+## Installing
+
+### From the command line
+
+```shell
+$ gem install puppet-lint-legacy_facts-check
+```
+
+### In a Gemfile
+
+```ruby
+gem 'puppet-lint-legacy_facts-check', :require => false
+```
+
+## Checks
+
+#### What you have done
+
+```puppet
+$package_name = $::operatingsystem {
+  'CentOS' => 'httpd',
+  'Debian' => 'apache2',
+}
+```
+
+```puppet
+$package_name = $facts['operatingsystem'] {
+  'CentOS' => 'httpd',
+  'Debian' => 'apache2',
+}
+```
+
+#### What you should have done
+
+```puppet
+$service_name = $facts['os']['name'] {
+  'CentOS' => 'httpd',
+  'Debian' => 'apache2',
+}
+```
+
+#### Disabling the check
+
+To disable this check, you can add `--no-legacy_facts` to your puppet-lint
+command line.
+
+```shell
+$ puppet-lint --no-legacy_facts path/to/file.pp
+```
+
+Alternatively, if you’re calling puppet-lint via the Rake task, you should
+insert the following line to your `Rakefile`.
+
+```ruby
+PuppetLint.configuration.send('disable_legacy_facts')
+```
 
 ## Limitations
 
@@ -107,63 +164,6 @@ RSA algorithm.
 This can be duplicated using the following string:
 `"$facts['ssh']['rsa']['fingerprints']['sha1']
 $facts['ssh']['rsa']['fingerprints']['sha256']"`
-
-## Installing
-
-### From the command line
-
-```shell
-$ gem install puppet-lint-legacy_facts-check
-```
-
-### In a Gemfile
-
-```ruby
-gem 'puppet-lint-legacy_facts-check', :require => false
-```
-
-## Checks
-
-#### What you have done
-
-```puppet
-$package_name = $::operatingsystem {
-  'CentOS' => 'httpd',
-  'Debian' => 'apache2',
-}
-```
-
-```puppet
-$package_name = $facts['operatingsystem'] {
-  'CentOS' => 'httpd',
-  'Debian' => 'apache2',
-}
-```
-
-#### What you should have done
-
-```puppet
-$service_name = $facts['os']['name'] {
-  'CentOS' => 'httpd',
-  'Debian' => 'apache2',
-}
-```
-
-#### Disabling the check
-
-To disable this check, you can add `--no-legacy_facts` to your puppet-lint
-command line.
-
-```shell
-$ puppet-lint --no-legacy_facts path/to/file.pp
-```
-
-Alternatively, if you’re calling puppet-lint via the Rake task, you should
-insert the following line to your `Rakefile`.
-
-```ruby
-PuppetLint.configuration.send('disable_legacy_facts')
-```
 
 ## License
 
