@@ -11,16 +11,16 @@ describe 'legacy_facts' do
       end
     end
 
-    context "fact variable using legacy $facts['osfamily']" do
-      let(:code) { "$facts['osfamily']" }
+    context "fact variable using legacy $osfamily" do
+      let(:code) { "$osfamily" }
 
       it 'should only detect a single problem' do
-        expect(problems).to have(1).problem
+        expect(problems).to have(0).problem
       end
     end
 
-    context "fact variable using legacy $osfamily" do
-      let(:code) { "$osfamily" }
+    context "fact variable using legacy $facts['osfamily']" do
+      let(:code) { "$facts['osfamily']" }
 
       it 'should only detect a single problem' do
         expect(problems).to have(1).problem
@@ -102,6 +102,14 @@ describe 'legacy_facts' do
       end
     end
 
+    context "fact variable using legacy $osfamily" do
+      let(:code) { "$osfamily" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(0).problem
+      end
+    end
+
     context "fact variable using legacy $facts['osfamily']" do
       let(:code) { "$facts['osfamily']" }
 
@@ -116,23 +124,6 @@ describe 'legacy_facts' do
       it 'should use the facts hash' do
         expect(manifest).to eq("$facts['os']['family']")
       end
-    end
-
-    context "fact variable using legacy $osfamily" do
-      let(:code) { "$osfamily" }
-
-      it 'should only detect a single problem' do
-        expect(problems).to have(1).problem
-      end
-
-      it 'should fix the problem' do
-        expect(problems).to contain_fixed(msg).on_line(1).in_column(1)
-      end
-
-      it 'should use the facts hash' do
-        expect(manifest).to eq("$facts['os']['family']")
-      end
-
     end
 
     context "fact variable using legacy $::osfamily" do
