@@ -84,7 +84,12 @@ PuppetLint.new_check(:legacy_facts) do
   }
   def check
     tokens.select { |x| x.type == :VARIABLE}.each do |token|
-      fact_name = token.value.sub(/^(::)?(facts|trusted)?\[?['"]?/, '').sub(/['"]?\]?$/ ,'')
+      fact_name = ''
+      if token.value.start_with?('::') then
+        fact_name = token.value.sub(/^::/, '')
+      elsif token.value.start_with?('facts[') then
+        fact_name = token.value.match(/facts\['(.*)'\]/)[1]
+      end
       if EASY_FACTS.include?(fact_name) or UNCONVERTIBLE_FACTS.include?(fact_name) or fact_name.match(Regexp.union(REGEX_FACTS)) then
         notify :warning, {
           :message => 'legacy fact',
@@ -97,7 +102,11 @@ PuppetLint.new_check(:legacy_facts) do
   end
 
   def fix(problem)
-    fact_name = problem[:token].value.sub(/^(::)?(facts|trusted)?\[?['"]?/, '').sub(/['"]?\]?$/ ,'')
+    if problem[:token].value.start_with?('::') then
+      fact_name = problem[:token].value.sub(/^::/, '')
+    elsif problem[:token].value.start_with?('facts[') then
+      fact_name = problem[:token].value.match(/facts\['(.*)'\]/)[1]
+    end
     if EASY_FACTS.include?(fact_name)
       problem[:token].value = EASY_FACTS[fact_name]
     elsif fact_name.match(Regexp.union(REGEX_FACTS))
