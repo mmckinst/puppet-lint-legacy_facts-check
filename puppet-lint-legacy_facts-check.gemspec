@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-legacy_facts-check'
-  spec.version     = '0.0.1'
+  spec.version     = '0.0.2'
   spec.homepage    = 'https://github.com/mmckinst/puppet-lint-legacy_facts-check'
   spec.license     = 'Apache-2.0'
   spec.author      = 'Mark McKinstry'
