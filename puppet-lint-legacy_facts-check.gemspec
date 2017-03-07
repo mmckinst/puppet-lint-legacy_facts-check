@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-legacy_facts-check'
-  spec.version     = '0.0.2'
+  spec.version     = '0.0.3'
   spec.homepage    = 'https://github.com/mmckinst/puppet-lint-legacy_facts-check'
   spec.license     = 'Apache-2.0'
   spec.author      = 'Mark McKinstry'
@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency             'puppet-lint', '~> 2.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
+  spec.add_development_dependency 'rspec-json_expectations'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
   spec.add_development_dependency 'rake'
 end
