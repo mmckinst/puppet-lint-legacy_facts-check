@@ -104,7 +104,7 @@ PuppetLint.new_check(:legacy_facts) do
   def fix(problem)
     if problem[:token].value.start_with?('::') then
       fact_name = problem[:token].value.sub(/^::/, '')
-    elsif problem[:token].value.start_with?('facts[') then
+    elsif problem[:token].value.start_with?("facts['") then
       fact_name = problem[:token].value.match(/facts\['(.*)'\]/)[1]
     end
     if EASY_FACTS.include?(fact_name)
