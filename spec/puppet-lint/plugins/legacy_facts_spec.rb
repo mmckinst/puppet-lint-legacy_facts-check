@@ -11,6 +11,14 @@ describe 'legacy_facts' do
       end
     end
 
+    context "fact variable using modern $facts['ssh']['rsa']['key'] hash" do
+      let(:code) { "$facts['ssh']['rsa']['key']" }
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problem
+      end
+    end
+
     context "fact variable using legacy $osfamily" do
       let(:code) { "$osfamily" }
 
@@ -102,6 +110,14 @@ describe 'legacy_facts' do
       end
     end
 
+    context "fact variable using modern $facts['ssh']['rsa']['key'] hash" do
+      let(:code) { "$facts['ssh']['rsa']['key']" }
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problem
+      end
+    end
+
     context "fact variable using legacy $osfamily" do
       let(:code) { "$osfamily" }
 
@@ -139,6 +155,22 @@ describe 'legacy_facts' do
 
       it 'should use the facts hash' do
         expect(manifest).to eq("$facts['os']['family']")
+      end
+    end
+
+    context "fact variable using legacy $::sshrsakey" do
+      let(:code) { "$::sshrsakey" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should fix the problem' do
+        expect(problems).to contain_fixed(msg).on_line(1).in_column(1)
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("$facts['ssh']['rsa']['key']")
       end
     end
 
