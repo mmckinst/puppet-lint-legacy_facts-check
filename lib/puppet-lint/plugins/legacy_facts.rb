@@ -8,7 +8,7 @@ PuppetLint.new_check(:legacy_facts) do
                  /^(?<attribute>ipaddress|ipaddress6|macaddress|mtu|netmask|netmask6|network|network6)_(?<interface>.*)$/,
                  /^processor(?<id>[0-9]+)$/,
                  /^sp_(?<name>.*)$/,
-                 /^ssh(?<algorithm>.*)key$/,
+                 /^ssh(?<algorithm>dsa|ecdsa|ed25519|rsa)key$/,
                  /^ldom_(?<name>.*)$/,
                  /^zone_(?<name>.*)_(?<attribute>brand|iptype|name|uuid|id|path|status)$/]
 
@@ -118,7 +118,7 @@ PuppetLint.new_check(:legacy_facts) do
         problem[:token].value = "facts['processors']['models'][" << m['id'] << "]"
       elsif m = fact_name.match(/^sp_(?<name>.*)$/)
         problem[:token].value = "facts['system_profiler']['" << m['name'] << "']"
-      elsif m = fact_name.match(/^ssh(?<algorithm>.*)key$/)
+      elsif m = fact_name.match(/^ssh(?<algorithm>dsa|ecdsa|ed25519|rsa)key$/)
         problem[:token].value = "facts['ssh']['" << m['algorithm'] << "']['key']"
       elsif m = fact_name.match(/^ldom_(?<name>.*)$/)
         problem[:token].value = "facts['ldom']['" << m['name'] << "']"
