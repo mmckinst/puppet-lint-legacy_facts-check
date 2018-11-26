@@ -102,6 +102,9 @@ PuppetLint.new_check(:legacy_facts) do
   end
 
   def fix(problem)
+    # This probably should never occur, but if it does then bail out:
+    raise PuppetLint::NoFix if problem[:token].raw and problem[:token].value != problem[:token].raw
+
     if problem[:token].value.start_with?('::') then
       fact_name = problem[:token].value.sub(/^::/, '')
     elsif problem[:token].value.start_with?("facts['") then
@@ -126,5 +129,7 @@ PuppetLint.new_check(:legacy_facts) do
         problem[:token].value = "facts['solaris_zones']['zones']['" << m['name'] << "']['" << m['attribute'] << "']"
       end
     end
+
+    problem[:token].raw = problem[:token].value unless problem[:token].raw.nil?
   end
 end
