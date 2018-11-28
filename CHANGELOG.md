@@ -1,3 +1,7 @@
+0.0.5 - 2018-11-27
+---
+* Fix correction of facts contained in strings in https://github.com/mmckinst/puppet-lint-legacy_facts-check/pull/13
+
 0.0.4 - 2018-11-12
 ---
 * fix ssh key regex in https://github.com/mmckinst/puppet-lint-legacy_facts-check/pull/10
