@@ -1,6 +1,12 @@
+0.0.6 - 2019-01-10
+---
+* document the linter only works on top scope facts
+* fix and update links to facter documentation
+* add comments to code
+
 0.0.5 - 2018-11-27
 ---
-* Fix correction of facts contained in strings in https://github.com/mmckinst/puppet-lint-legacy_facts-check/pull/13
+* fix correction of facts contained in strings in https://github.com/mmckinst/puppet-lint-legacy_facts-check/pull/13
 
 0.0.4 - 2018-11-12
 ---

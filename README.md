@@ -66,6 +66,11 @@ PuppetLint.configuration.send('disable_legacy_facts')
 
 ## Limitations
 
+The linter will only find and work on top scope facts like `$::osfamily`,
+non-top scope facts like `$osfamily` will not be found or fixed. The
+[top_scope_facts-check ](https://github.com/mmckinst/puppet-lint-top_scope_facts-check)
+puppet linter can be used to fix that problem
+
 Some facts have no equivalent in the structured fact list:
 
 ### `memoryfree_mb`
@@ -76,7 +81,7 @@ The closest equivalent is `$facts['memory']['system'][available']` or
 `$facts['memory']['system']['available_bytes']`.
 
 See
-[facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
+[facter documentation on memory](https://puppet.com/docs/facter/3.12/core_facts.html#memory).
 
 ### `memorysize_mb`
 
@@ -85,7 +90,7 @@ There is no fact that returns exclusively in MiB.
 The closest equivalent is `$facts['memory']['system']['total']` or
 `$facts['memory']['system']['total_bytes']`.
 
-See [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
+See [facter documentation on memory](https://puppet.com/docs/facter/3.12/core_facts.html#memory).
 
 ### `swapfree_mb`
 
@@ -94,7 +99,7 @@ There is no fact that returns exclusively in MiB.
 The closest equivalent is `$facts['memory']['swap']['available']` or
 `$facts['memory']['swap']['available_bytes']`.
 
-See [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
+See [facter documentation on memory](https://puppet.com/docs/facter/3.12/core_facts.html#memory).
 
 ### `swapsize_mb`
 
@@ -103,7 +108,7 @@ There is no fact that returns exclusively in MiB.
 The closest equivalent is `$facts['memory']['swap']['used']` or
 `$facts['memory']['swap']['used_bytes']`.
 
-See [facter documentation on memory](https://docs.puppet.com/facter/3.4/core_facts.html#memory).
+See [facter documentation on memory](https://puppet.com/docs/facter/3.12/core_facts.html#memory).
 
 ### `blockdevices`
 

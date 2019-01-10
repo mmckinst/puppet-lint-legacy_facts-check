@@ -1,9 +1,20 @@
 PuppetLint.new_check(:legacy_facts) do
+
+  # These facts that can't be converted to new facts for reasons documented at
+  # https://github.com/mmckinst/puppet-lint-legacy_facts-check#limitations
   UNCONVERTIBLE_FACTS = ['memoryfree_mb', 'memorysize_mb', 'swapfree_mb',
                          'swapsize_mb', 'blockdevices', 'interfaces', 'zones',
                          'sshfp_dsa', 'sshfp_ecdsa', 'sshfp_ed25519',
                          'sshfp_rsa']
 
+  # These facts will depend on how a system is set up and can't just be
+  # enumerated like the EASY_FACTS below.
+  #
+  # For example a sever might have two block devices named 'sda' and 'sdb' so
+  # there would be a $blockdeivce_sda_vendor and $blockdeivce_sdb_vendor fact
+  # for each device. Or it could have 26 block devices going all the way up to
+  # 'sdz'. There is no way to know what the possibilities are so we have to use
+  # a regex to match them.
   REGEX_FACTS = [/^blockdevice_(?<devicename>.*)_(?<attribute>model|size|vendor)$/,
                  /^(?<attribute>ipaddress|ipaddress6|macaddress|mtu|netmask|netmask6|network|network6)_(?<interface>.*)$/,
                  /^processor(?<id>[0-9]+)$/,
@@ -12,6 +23,8 @@ PuppetLint.new_check(:legacy_facts) do
                  /^ldom_(?<name>.*)$/,
                  /^zone_(?<name>.*)_(?<attribute>brand|iptype|name|uuid|id|path|status)$/]
 
+  # These facts have a one to one correlation between a legacy fact and a new
+  # structured fact.
   EASY_FACTS = {
     'architecture'                => "facts['os']['architecture']",
     'augeasversion'               => "facts['augeas']['version']",
@@ -85,11 +98,19 @@ PuppetLint.new_check(:legacy_facts) do
   def check
     tokens.select { |x| x.type == :VARIABLE}.each do |token|
       fact_name = ''
+
+      # Get rid of the top scope before we do our work. We don't need to
+      # preserve it because it won't work with the new structured facts.
       if token.value.start_with?('::') then
         fact_name = token.value.sub(/^::/, '')
+
+      # This matches using legacy facts in a the new structured fact. For
+      # example this would match 'uuid' in $facts['uuid'] so it can be converted
+      # to facts['dmi']['product']['uuid']"
       elsif token.value.start_with?("facts['") then
         fact_name = token.value.match(/facts\['(.*)'\]/)[1]
       end
+
       if EASY_FACTS.include?(fact_name) or UNCONVERTIBLE_FACTS.include?(fact_name) or fact_name.match(Regexp.union(REGEX_FACTS)) then
         notify :warning, {
           :message => 'legacy fact',
@@ -105,8 +126,14 @@ PuppetLint.new_check(:legacy_facts) do
     # This probably should never occur, but if it does then bail out:
     raise PuppetLint::NoFix if problem[:token].raw and problem[:token].value != problem[:token].raw
 
+    # Get rid of the top scope before we do our work. We don't need to
+    # preserve it because it won't work with the new structured facts.
     if problem[:token].value.start_with?('::') then
       fact_name = problem[:token].value.sub(/^::/, '')
+
+    # This matches using legacy facts in a the new structured fact. For
+    # example this would match 'uuid' in $facts['uuid'] so it can be converted
+    # to facts['dmi']['product']['uuid']"
     elsif problem[:token].value.start_with?("facts['") then
       fact_name = problem[:token].value.match(/facts\['(.*)'\]/)[1]
     end
