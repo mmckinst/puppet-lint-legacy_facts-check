@@ -22,7 +22,7 @@ describe 'legacy_facts' do
     context "fact variable using legacy $osfamily" do
       let(:code) { "$osfamily" }
 
-      it 'should only detect a single problem' do
+      it 'should not detect any problems' do
         expect(problems).to have(0).problem
       end
     end
@@ -129,9 +129,10 @@ describe 'legacy_facts' do
     context "fact variable using legacy $osfamily" do
       let(:code) { "$osfamily" }
 
-      it 'should only detect a single problem' do
+      it 'should not detect any problems' do
         expect(problems).to have(0).problem
       end
+
     end
 
     context "fact variable using legacy $facts['osfamily']" do
