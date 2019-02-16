@@ -98,6 +98,14 @@ describe 'legacy_facts' do
         expect(problems).to have(1).problem
       end
     end
+
+    context "fact variable using legacy variable in double quotes \"$::osfamily\"" do
+      let(:code) { "\"$::osfamily\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+    end
   end
 
 
@@ -270,6 +278,18 @@ describe 'legacy_facts' do
 
       it 'should use the facts hash' do
         expect(manifest).to eq('"start '"${facts['os']['family']}"' end"')
+      end
+    end
+
+    context "fact variable using legacy variable in double quotes \"$::osfamily\"" do
+      let(:code) { "\"$::osfamily\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['os']['family']\"")
       end
     end
   end

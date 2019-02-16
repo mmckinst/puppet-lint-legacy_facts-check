@@ -1,4 +1,5 @@
 PuppetLint.new_check(:legacy_facts) do
+  VAR_TYPES = Set[:VARIABLE, :UNENC_VARIABLE]
 
   # These facts that can't be converted to new facts for reasons documented at
   # https://github.com/mmckinst/puppet-lint-legacy_facts-check#limitations
@@ -96,7 +97,7 @@ PuppetLint.new_check(:legacy_facts) do
     'zonename'                    => "facts['solaris_zones']['current']",
   }
   def check
-    tokens.select { |x| x.type == :VARIABLE}.each do |token|
+    tokens.select { |x| VAR_TYPES.include?(x.type) }.each do |token|
       fact_name = ''
 
       # Get rid of the top scope before we do our work. We don't need to
