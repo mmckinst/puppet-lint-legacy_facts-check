@@ -1,3 +1,10 @@
+1.0.0 - 2019-04-12
+---
+* fix variables in double quoted strings https://github.com/mmckinst/puppet-lint-legacy_facts-check/issues/15
+* release 1.0.0 because the gem is stable and fixing variables in double quoted
+  strings will find more puppet-lint issues on code that was falsely believed to
+  have no puppet-lint issues.
+
 0.0.6 - 2019-01-10
 ---
 * document the linter only works on top scope facts
