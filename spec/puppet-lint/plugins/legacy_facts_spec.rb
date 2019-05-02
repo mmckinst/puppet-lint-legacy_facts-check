@@ -292,5 +292,104 @@ describe 'legacy_facts' do
         expect(manifest).to eq("\"$facts['os']['family']\"")
       end
     end
+    context "fact variable using legacy variable in double quotes \"$::gid\"" do
+      let(:code) { "\"$::gid\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['identity']['group']\"")
+      end
+    end
+    context "fact variable using legacy variable in double quotes \"$::id\"" do
+      let(:code) { "\"$::id\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['identity']['user']\"")
+      end
+    end
+    context "fact variable using legacy variable in double quotes \"$::lsbdistcodename\"" do
+      let(:code) { "\"$::lsbdistcodename\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['os']['distro']['codename']\"")
+      end
+    end
+    context "fact variable using legacy variable in double quotes \"$::lsbdistdescription\"" do
+      let(:code) { "\"$::lsbdistdescription\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['os']['distro']['description']\"")
+      end
+    end
+    context "fact variable using legacy variable in double quotes \"$::lsbdistid\"" do
+      let(:code) { "\"$::lsbdistid\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['os']['distro']['id']\"")
+      end
+    end
+    context "fact variable using legacy variable in double quotes \"$::lsbdistrelease\"" do
+      let(:code) { "\"$::lsbdistrelease\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['os']['distro']['release']['full']\"")
+      end
+    end
+    context "fact variable using legacy variable in double quotes \"$::lsbmajdistrelease\"" do
+      let(:code) { "\"$::lsbmajdistrelease\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['os']['distro']['release']['major']\"")
+      end
+    end
+    context "fact variable using legacy variable in double quotes \"$::lsbminordistrelease\"" do
+      let(:code) { "\"$::lsbminordistrelease\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['os']['distro']['release']['minor']\"")
+      end
+    end
+    context "fact variable using legacy variable in double quotes \"$::lsbrelease\"" do
+      let(:code) { "\"$::lsbrelease\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"$facts['os']['distro']['release']['specification']\"")
+      end
+    end
   end
 end
