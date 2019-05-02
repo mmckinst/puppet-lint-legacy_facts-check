@@ -1,3 +1,7 @@
+1.0.1 - 2019-05-02
+---
+* fix incorrectly mapped facts in https://github.com/mmckinst/puppet-lint-legacy_facts-check/issues/21
+
 1.0.0 - 2019-04-12
 ---
 * fix variables in double quoted strings https://github.com/mmckinst/puppet-lint-legacy_facts-check/issues/15
