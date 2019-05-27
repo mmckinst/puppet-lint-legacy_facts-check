@@ -1,5 +1,8 @@
 ---
 language: ruby
+# only using 14.04 because it still supports ruby 1.9.3
+# http://rubies.travis-ci.org/
+dist: trusty
 before_install: rm Gemfile.lock || true
 rvm:
   - 1.9.3
