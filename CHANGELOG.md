@@ -1,3 +1,7 @@
+1.0.2 - 2019-05-26
+---
+* fix a warning from https://github.com/mmckinst/puppet-lint-legacy_facts-check/pull/24
+
 1.0.1 - 2019-05-02
 ---
 * fix incorrectly mapped facts in https://github.com/mmckinst/puppet-lint-legacy_facts-check/issues/21
