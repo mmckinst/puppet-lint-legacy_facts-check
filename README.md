@@ -5,9 +5,19 @@
 
 ## Overview
 
-A pupet-lint to check you are not using legacy facts like `$::operatingsystem`
-or `$facts['operatingsystem']`. You should use the new structured facts like
-`$facts['os']['name']` instead
+Puppet 3.5 [optionally added structured
+facts](https://github.com/puppetlabs/docs-archive/blob/master/puppet/3.5/release_notes.markdown#structured-facts-early-version)
+as well as the [global facts
+hash](https://github.com/puppetlabs/docs-archive/blob/master/puppet/3.5/release_notes.markdown#global-facts-hash). They
+were both turned on by default in puppet 4.
+
+This linter will convert from legacy facts like `$::operatingsystem` or legacy
+hashed facts like `$facts['operatingsystem']` to the new structured facts like
+`$facts['os']['name']`.
+
+If you only want to convert from facts like `$::operatingsystem` to the facts
+hash like `$facts['operatingsystem']`, you want the [top scope facts
+linter](https://github.com/mmckinst/puppet-lint-top_scope_facts-check).
 
 ## Installing
 
@@ -66,12 +76,21 @@ insert the following line to your `Rakefile`.
 PuppetLint.configuration.send('disable_legacy_facts')
 ```
 
+Alternatively, you can disable it directly in your puppet manifest.
+
+```puppet
+# lint:ignore:lint-legacy_facts
+$package_name = $facts['operatingsystem'] {
+  'CentOS' => 'httpd',
+  'Debian' => 'apache2',
+}
+# lint:endignore
+```
+
 ## Limitations
 
 The linter will only find and work on top scope facts like `$::osfamily`,
-non-top scope facts like `$osfamily` will not be found or fixed. The
-[top_scope_facts-check ](https://github.com/mmckinst/puppet-lint-top_scope_facts-check)
-puppet linter can be used to fix that problem
+non-top scope facts like `$osfamily` will not be found or fixed. 
 
 Some facts have no equivalent in the structured fact list:
 
