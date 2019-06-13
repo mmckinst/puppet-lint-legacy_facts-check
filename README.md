@@ -69,9 +69,7 @@ PuppetLint.configuration.send('disable_legacy_facts')
 ## Limitations
 
 The linter will only find and work on top scope facts like `$::osfamily`,
-non-top scope facts like `$osfamily` will not be found or fixed. The
-[top_scope_facts-check ](https://github.com/mmckinst/puppet-lint-top_scope_facts-check)
-puppet linter can be used to fix that problem
+non-top scope facts like `$osfamily` will not be found or fixed. 
 
 Some facts have no equivalent in the structured fact list:
 
