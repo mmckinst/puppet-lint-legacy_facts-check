@@ -5,9 +5,19 @@
 
 ## Overview
 
-A pupet-lint to check you are not using legacy facts like `$::operatingsystem`
-or `$facts['operatingsystem']`. You should use the new structured facts like
-`$facts['os']['name']` instead
+Puppet 3.5 [optionally added structured
+facts](https://github.com/puppetlabs/docs-archive/blob/master/puppet/3.5/release_notes.markdown#structured-facts-early-version)
+as well as the [global facts
+hash](https://github.com/puppetlabs/docs-archive/blob/master/puppet/3.5/release_notes.markdown#global-facts-hash). They
+were both turned on by default in puppet 4.
+
+This linter will convert from legacy facts like `$::operatingsystem` or legacy
+hashed facts like `$facts['operatingsystem']` to the new structured facts like
+`$facts['os']['name']`.
+
+If you only want to convert from facts like `$::operatingsystem` to the facts
+hash like `$facts['operatingsystem']`, you want the [top scope facts
+linter](https://github.com/mmckinst/puppet-lint-top_scope_facts-check).
 
 ## Installing
 
