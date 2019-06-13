@@ -66,6 +66,17 @@ insert the following line to your `Rakefile`.
 PuppetLint.configuration.send('disable_legacy_facts')
 ```
 
+Alternatively, you can disable it directly in your puppet manifest.
+
+```puppet
+# lint:ignore:lint-legacy_facts
+$package_name = $facts['operatingsystem'] {
+  'CentOS' => 'httpd',
+  'Debian' => 'apache2',
+}
+# lint:endignore
+```
+
 ## Limitations
 
 The linter will only find and work on top scope facts like `$::osfamily`,
