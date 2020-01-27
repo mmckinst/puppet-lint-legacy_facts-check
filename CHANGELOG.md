@@ -1,3 +1,8 @@
+1.0.3 - 2020-01-27
+---
+* work around for https://github.com/mmckinst/puppet-lint-legacy_facts-check/pull/28
+* drop ruby 1.9.3 support
+
 1.0.2 - 2019-05-26
 ---
 * fix a warning from https://github.com/mmckinst/puppet-lint-legacy_facts-check/pull/24
