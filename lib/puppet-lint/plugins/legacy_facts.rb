@@ -11,7 +11,7 @@ PuppetLint.new_check(:legacy_facts) do
   # These facts will depend on how a system is set up and can't just be
   # enumerated like the EASY_FACTS below.
   #
-  # For example a sever might have two block devices named 'sda' and 'sdb' so
+  # For example a server might have two block devices named 'sda' and 'sdb' so
   # there would be a $blockdeivce_sda_vendor and $blockdeivce_sdb_vendor fact
   # for each device. Or it could have 26 block devices going all the way up to
   # 'sdz'. There is no way to know what the possibilities are so we have to use
