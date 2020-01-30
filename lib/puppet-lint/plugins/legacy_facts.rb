@@ -124,9 +124,6 @@ PuppetLint.new_check(:legacy_facts) do
   end
 
   def fix(problem)
-    # This probably should never occur, but if it does then bail out:
-    raise PuppetLint::NoFix if problem[:token].raw and problem[:token].value != problem[:token].raw
-
     # Get rid of the top scope before we do our work. We don't need to
     # preserve it because it won't work with the new structured facts.
     if problem[:token].value.start_with?('::') then
@@ -157,7 +154,5 @@ PuppetLint.new_check(:legacy_facts) do
         problem[:token].value = "facts['solaris_zones']['zones']['" << m['name'] << "']['" << m['attribute'] << "']"
       end
     end
-
-    problem[:token].raw = problem[:token].value unless problem[:token].raw.nil?
   end
 end
