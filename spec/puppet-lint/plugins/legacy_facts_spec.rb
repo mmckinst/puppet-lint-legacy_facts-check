@@ -106,6 +106,14 @@ describe 'legacy_facts' do
         expect(problems).to have(1).problem
       end
     end
+
+    context 'fact variable using legacy facts hash variable in interpolation' do
+      let(:code) { %("${facts['osfamily']}") }
+
+      it 'detects a single problem' do
+        expect(problems).to have(1).problem
+      end
+    end
   end
 
 
@@ -389,6 +397,17 @@ describe 'legacy_facts' do
 
       it 'should use the facts hash' do
         expect(manifest).to eq("\"$facts['os']['distro']['release']['specification']\"")
+      end
+    end
+    context "fact variable using facts hash in double quotes \"$facts['lsbrelease']\"" do
+      let(:code) { "\"${facts['lsbrelease']}\"" }
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should use the facts hash' do
+        expect(manifest).to eq("\"${facts['os']['distro']['release']['specification']}\"")
       end
     end
   end
