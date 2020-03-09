@@ -96,6 +96,14 @@ PuppetLint.new_check(:legacy_facts) do
     'xendomains'                  => "facts['xen']['domains']",
     'zonename'                    => "facts['solaris_zones']['current']",
   }
+
+  # A list of valid hash key token types
+  HASH_KEY_TYPES = Set[
+    :STRING,  # Double quoted string
+    :SSTRING, # Single quoted string
+    :NAME,    # Unquoted single word
+  ].freeze
+
   def check
     tokens.select { |x| LEGACY_FACTS_VAR_TYPES.include?(x.type) }.each do |token|
       fact_name = ''
@@ -108,36 +116,50 @@ PuppetLint.new_check(:legacy_facts) do
       # This matches using legacy facts in a the new structured fact. For
       # example this would match 'uuid' in $facts['uuid'] so it can be converted
       # to facts['dmi']['product']['uuid']"
-      elsif token.value.start_with?("facts['") then
+      elsif token.value == 'facts' then
+        fact_name = hash_key_for(token)
+
+      elsif token.value.start_with?("facts['")
         fact_name = token.value.match(/facts\['(.*)'\]/)[1]
       end
 
       if EASY_FACTS.include?(fact_name) or UNCONVERTIBLE_FACTS.include?(fact_name) or fact_name.match(Regexp.union(REGEX_FACTS)) then
         notify :warning, {
-          :message => 'legacy fact',
-          :line    => token.line,
-          :column  => token.column,
-          :token   => token,
+          :message   => 'legacy fact',
+          :line      => token.line,
+          :column    => token.column,
+          :token     => token,
+          :fact_name => fact_name,
         }
       end
     end
   end
 
+  # If the variable is using the $facts hash represented internally by multiple
+  # tokens, this helper simplifies accessing the hash key.
+  def hash_key_for(token)
+    lbrack_token = token.next_code_token
+    return '' unless lbrack_token && lbrack_token.type == :LBRACK
+
+    key_token = lbrack_token.next_code_token
+    return '' unless key_token && HASH_KEY_TYPES.include?(key_token.type)
+
+    key_token.value
+  end
+
   def fix(problem)
-    # This probably should never occur, but if it does then bail out:
-    raise PuppetLint::NoFix if problem[:token].raw and problem[:token].value != problem[:token].raw
+    fact_name = problem[:fact_name]
 
-    # Get rid of the top scope before we do our work. We don't need to
-    # preserve it because it won't work with the new structured facts.
-    if problem[:token].value.start_with?('::') then
-      fact_name = problem[:token].value.sub(/^::/, '')
-
-    # This matches using legacy facts in a the new structured fact. For
-    # example this would match 'uuid' in $facts['uuid'] so it can be converted
-    # to facts['dmi']['product']['uuid']"
-    elsif problem[:token].value.start_with?("facts['") then
-      fact_name = problem[:token].value.match(/facts\['(.*)'\]/)[1]
+    # Check if the variable is using the $facts hash represented internally by
+    # multiple tokens and remove the tokens for the old legacy key if so.
+    if problem[:token].value == 'facts'
+      loop do
+        t = problem[:token].next_token
+        remove_token(t)
+        break if t.type == :RBRACK
+      end
     end
+
     if EASY_FACTS.include?(fact_name)
       problem[:token].value = EASY_FACTS[fact_name]
     elsif fact_name.match(Regexp.union(REGEX_FACTS))
@@ -157,7 +179,5 @@ PuppetLint.new_check(:legacy_facts) do
         problem[:token].value = "facts['solaris_zones']['zones']['" << m['name'] << "']['" << m['attribute'] << "']"
       end
     end
-
-    problem[:token].raw = problem[:token].value unless problem[:token].raw.nil?
   end
 end
