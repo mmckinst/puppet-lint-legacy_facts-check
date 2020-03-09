@@ -1,3 +1,7 @@
+1.0.4 - 2020-03-08
+---
+* make the linter work for puppet-lint >= 2.4
+
 1.0.3 - 2020-01-27
 ---
 * work around for https://github.com/mmckinst/puppet-lint-legacy_facts-check/pull/28
