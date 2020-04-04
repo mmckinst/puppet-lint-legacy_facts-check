@@ -1,6 +1,7 @@
-1.0.4 - 2020-03-08
+1.0.4 - 2020-04-04
 ---
 * make the linter work for puppet-lint >= 2.4
+* correct lint ignore example
 
 1.0.3 - 2020-01-27
 ---
