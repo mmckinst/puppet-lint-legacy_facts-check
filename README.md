@@ -79,7 +79,7 @@ PuppetLint.configuration.send('disable_legacy_facts')
 Alternatively, you can disable it directly in your puppet manifest.
 
 ```puppet
-# lint:ignore:lint-legacy_facts
+# lint:ignore:legacy_facts
 $package_name = $facts['operatingsystem'] {
   'CentOS' => 'httpd',
   'Debian' => 'apache2',
