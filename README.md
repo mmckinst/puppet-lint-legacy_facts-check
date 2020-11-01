@@ -54,7 +54,7 @@ $package_name = $facts['operatingsystem'] {
 #### What you should have done
 
 ```puppet
-$service_name = $facts['os']['name'] {
+$package_name = $facts['os']['name'] {
   'CentOS' => 'httpd',
   'Debian' => 'apache2',
 }
