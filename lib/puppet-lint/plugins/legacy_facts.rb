@@ -125,7 +125,7 @@ PuppetLint.new_check(:legacy_facts) do
 
       if EASY_FACTS.include?(fact_name) or UNCONVERTIBLE_FACTS.include?(fact_name) or fact_name.match(Regexp.union(REGEX_FACTS)) then
         notify :warning, {
-          :message   => 'legacy fact',
+          :message   => "legacy fact '#{fact_name}'",
           :line      => token.line,
           :column    => token.column,
           :token     => token,
