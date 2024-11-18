@@ -89,6 +89,8 @@ $package_name = $facts['operatingsystem'] {
 
 ## Limitations
 
+The linter can only scan known facts in the codebase, custom facts cannot be scanned.
+
 The linter will only find and work on top scope facts like `$::osfamily`,
 non-top scope facts like `$osfamily` will not be found or fixed. 
 
